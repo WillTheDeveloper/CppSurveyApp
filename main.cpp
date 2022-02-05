@@ -3,6 +3,7 @@
 
 void CreateNewSurvey();
 void CompleteExistingSurvey();
+void AddQuestions(const std::string& filename);
 
 int main() {
     std::cout << "=======================" << std::endl;
@@ -14,6 +15,8 @@ int main() {
     std::cout << "[2] Complete an existing survey" << std::endl;
 
     int response;
+
+    std::cin >> response;
 
     switch (response) {
         case 1:
@@ -31,6 +34,26 @@ int main() {
     return 0;
 }
 
+void AddQuestions(const std::string& filename) {
+    std::ofstream Survey(filename);
+
+    bool add;
+
+    add = true;
+
+    while (add) {
+        std::string question;
+        std::cout << "Enter the question you would like to add:" << std::endl;
+        std::cin >> question;
+        Survey << question << std::endl;
+
+        if (question.empty())
+        {
+            add = false;
+        }
+    }
+}
+
 void CreateNewSurvey() {
     std::string name;
 
@@ -38,7 +61,14 @@ void CreateNewSurvey() {
 
     std::cin >> name;
 
-    std::ofstream Survey("./surveys/" + name + ".txt");
+    std::ofstream Survey("../surveys/" + name + ".txt");
+
+    std::string file;
+    file = "../surveys/" +  name + ".txt";
+
+    Survey.close();
+
+    AddQuestions(file);
 }
 
 void CompleteExistingSurvey() {
